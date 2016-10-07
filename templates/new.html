@@ -1,7 +1,75 @@
 <html>
 <head>
   <title>Purchase Order</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+  <!-- <script src="jquery.json-2.4.min.js"></script> -->
 </head>
+<style>
+.containerDiv {
+  border: 1px solid #3697f6;
+  width: 100%; display:table
+}
+.rowDivHeader {
+  border: 1px solid #668db6;
+  background-color: #336799;
+  color: white;
+  font-weight: bold; display:table-row
+}
+/*cell border colors*/
+.rowDiv {
+  /*border: 1px solid #668db6;*/
+    background-color: #ffffff;
+  display:table-row
+}
+.cellDivHeader {
+  border-right: 1px solid white;
+  display: table-cell;
+  width:12%;
+  padding: 1px;
+  text-align: center;
+}
+.cellDiv {
+  border-right: 2px solid white;
+  display: table-cell;
+  width:10%;
+  padding-right: 4px;
+  text-align: center;
+  border-bottom: none;
+}
+
+/* limit number of rows display on the screen*/
+.divTable {
+    height: 200px;
+    overflow: scroll;
+    width: 945px;
+}
+ tbody { height:10em;  overflow:scroll;}*/
+table.tableSection {
+    display: table;
+    width: 100%;
+}
+table.tableSection thead, table.tableSection tbody {
+    float: left;
+    width: 100%;
+}
+table.tableSection tbody {
+    overflow: auto;
+    height: 150px;
+}
+table.tableSection tr {
+    width: 100%;
+    display: table;
+    text-align: left;
+}
+table.tableSection th, table.tableSection td {
+    width: 33%;
+}
+.lastCell {
+  border-right: none;
+}
+</style>
+
 <body>
   <script language="JavaScript">
     function showInput() {
@@ -12,7 +80,31 @@
   <script>
     // once the document is loaded
     $(document).ready(function(){
+        function calculate() {
+        var Box1 = document.getElementById('qty').value;
+        var Box2 = document.getElementById('price_purch').value;
+        var price_total_item = document.getElementById('price_total_item');
+        var myResult = Box1 * Box2;
+        console.log(Box1);
+        price_total_item.innerHTML = myResult;
+        };
       // we'll add a click handler to the button
+          $('btn2').click(function(){
+            alert("You have clicked a button!");
+            // $(document).on('.example1',function(){
+              for (var i = 2; i < 99; i++) {
+                $('.example1').append('<tr id="'+i+'">'+
+                          '<td> <input type="integer" name="sr_no" id="{{i}}" value=" " maxlength="6" size="3"></td>'+
+                          '<td> <input type="text" name="prod_desc" id="prod_desc" value=" " maxlength="70" size="55" required></td>'+
+                          '<td><input type="number" name="qty" id="qty" value=" " size="25"></td>'+
+                          '<td><input type="number" name="price_purch" id="price_purch" value=" " size="25"></td>'+
+                          '<td> <input type="number" name="price_total_item" id="price_total_item" value=" " size="25" disabled></td>'+
+                        '<tr>');
+                }
+          });
+
+
+
       $('#edit').click(function(){
           // this is the jQuery get function, which we'll use to send Ajax requests
           // to this function we are passing 3 arguments
@@ -33,7 +125,7 @@
           console.log(htmlStr);
           // insert our string into our document using jQuery
           $('#podetails').html(htmlStr);
-        }, 'json');
+          }, 'json');
       });
 
       // $(document).ready(function(){
@@ -66,10 +158,11 @@
     //       // insert our string into our document using jQuery
     //       $('#edit').html(htmlStr);
     //     }, 'json');
-    // });
+  });
   </script>
   {{ all_pos }}
   <h1>Create New Purchase Order!</h1>
+  <button class ="btn2">Add Rows</button>
   <FORM action='/POS' method='POST'>
       <input type="hidden" name="po_header_id" disabled></input></label>
       // <label>Company code :</label>
@@ -82,7 +175,7 @@
       <label>Supplier Code: </label><input type="text" name="supplier_id" value= "">
       <label>supplier description: </label><input type="text" name="supplier_desc" value= " "></input>
       <label>Payment terms: </label><input type="text" name="payment_term" value= " "></input>
-                <table class="table table-stripped">
+                <table class="table table-stripped rowDivHeader">
                   <thead>
                     <tr class="text_align">
                       <th class="text_align">Sr No</th>
@@ -93,20 +186,18 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td> <input type="integer" name="sr_no" id="sr_no" value="1" maxlength="6" size="3"></td>
-                      <td> <input type="text" name="prod_desc" id="prod_desc" value=" " maxlength="70" size="55" required></td>
-                      <td> <input type="number" name="qty" id="qty" value=" " size="25"></td>
-                      <td> <input type="number" name="price_purch" id="price_purch" value=" " size="25"></td>
-                      <td> <input type="number" name="price_total_item" id="price_total_item" value=" " size="25" disabled></td>
+                    <tr class = "rowDiv example1">
+                        <td> <input type="integer" name="sr_no" id="sr_no" value="1" maxlength="6" size="3"></td>
+                        <td> <input type="text" name="prod_desc" id="prod_desc" value=" " maxlength="70" size="55" required></td>
+                        <td> <input type="number" name="qty" id="qty" value=" " size="25"></td>
+                        <td> <input type="number" name="price_purch" id="price_purch" value=" " size="25"></td>
+                        <td> <input type="number" name="price_total_item" id="price_total_item" value=" " size="25" disabled></td>
                     </tr>
                   </tbody>
                 </table>
       <p> <h1 class="tag1" name="gr_text" id="gr_text">GR Text</h1></p>
       <textarea rows="7" name="gr_text" style="width:100%"></textarea>
       <input type="hidden" name="po_header_id" placeholder="po_header_id" value= " "></p>
-
-
       <input type="submit" name="submit">
   </form>
 <!--     <div id="podetails">
