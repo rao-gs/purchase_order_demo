@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{po_header.po_header_id}} Edit Page</title>
+</head>
+<body>
+  <h1>Purcahse Order: {{po_header.po_header_id}}</h1>
+  <form action="/POS/{{po_header.po_header_id}}/edit" method="post">
+    <input type="hidden" name="po_header_id" value="{{po_header.po_header_id}}" disabled>
+    <label>Company code :</label><input type="number" name="company_code" value="{{po_header.company_code}}">
+    <label>Supplier id: </label><input type="text" name="supplier_id" value="{{po_header.supplier_id}}">
+    <<label>supplier description: </label><input type="text" name="supplier_desc" value="{{po_header.supplier_desc}}">
+    <label>Payment terms: </label><input type="text" name="payment_term" value= "{{po_header.payment_term}}"></input>
+                <table class="table table-stripped">
+                  <thead>
+                    <tr class="text_align">
+                      <th class="text_align">Sr No</th>
+                      <th>Product</th>
+                      <th>Quantity</th>
+                      <th>Purchase Price</th>
+                      <th>Total Price</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> <input type="integer" name="sr_no" id="sr_no" value="{{po_header.sr_no}}" maxlength="6" size="3"></td>
+                      <td> <input type="text" name="prod_desc" id="prod_desc" value="{{po_header.prod_desc}}" maxlength="70" size="55" required=""></td>
+                      <td> <input type="number" name="qty" id="qty" value="{{po_header.qty}}" size="25"></td>
+                      <td> <input type="number" name="price_purch" id="price_purch" value="{{po_header.price_purch}}" size="25"></td>
+                      <td> <input type="number" name="price_total_item" id="price_total_item" value="{{po_header.price_total_item}}" size="25" disabled></td>
+                    </tr>
+                  </tbody>
+                </table>
+    <p> <h1 class="tag1" name="gr_text" id="gr_text">GR Text</h1></p>
+    <textarea rows="7" name="gr_text" style="width:100%"> {{po_header.gr_text}} </textarea>
+    <p><input type="submit" value="Save"></p>
+  </form>
+  <form action="/POS/{{po_header.po_header_id}}/delete" method="post">
+    <input type="submit" value="Delete">
+  </form>
+  <p><a href="/POS">Home</a></p>
+</body> 
+</html>

@@ -1,0 +1,96 @@
+<html>
+<head>
+  <title>Purchase Order</title>
+</head>
+<body>
+  <script language="JavaScript">
+    function showInput() {
+        document.getElementById('display').innerHTML = 
+                    document.getElementById("user_input").value;
+    }
+  </script>
+  <script>
+    // once the document is loaded
+    $(document).ready(function(){
+      // we'll add a click handler to the button
+      $('#edit').click(function(){
+          // this is the jQuery get function, which we'll use to send Ajax requests
+          // to this function we are passing 3 arguments
+          // a url, function, and the dataType parameter
+        $.get('/getPO/edit', function(res) {
+          // the function will send a request to the above url and get a response
+          // which we will store in the variable 'res'
+          var htmlStr = ""; // we create an empty string
+          // then loop through our res and create a string of html tags below
+          for(var i = 0; i < res.length; i++) {
+            htmlStr += "<div class='podetails'>";
+            htmlStr += "<h2>" + res[i].purchase_order_id + "</h2>";
+            htmlStr += "<h2>" + res[i].supplier_id + "</h2>";
+            htmlStr += "<p>" + res[i].company_code + "</p>";
+            htmlStr += "</div>";
+          }
+          // uncomment the line below to see what our string looks like
+          console.log(htmlStr);
+          // insert our string into our document using jQuery
+          $('#podetails').html(htmlStr); 
+        }, 'json');
+      });
+
+      // $(document).ready(function(){
+      //   $('#edit').click(function(){
+      //     $.get('/get_PO/index_html', function(res) {
+      //       $('#podetails').html(res);
+      //     });
+      //   });
+      // });
+
+    //   $('#save').click(function(){
+    //       // this is the jQuery get function, which we'll use to send Ajax requests
+    //       // to this function we are passing 3 arguments
+    //       // a url, function, and the dataType parameter
+    //     $.get('/getPO/save', function(res) {
+
+    //       // the function will send a request to the above url and get a response
+    //       // which we will store in the variable 'res'
+    //       var htmlStr = ""; // we create an empty string
+    //       // then loop through our res and create a string of html tags below
+    //       for(var i = 0; i < res.length; i++) {
+    //         htmlStr += "<div class='quote'>";
+    //         htmlStr += "<h2>" + res[i].purchase_order_id + "</h2>";
+    //         htmlStr += "<h2>" + res[i].supplier_id + "</h2>";
+    //         htmlStr += "<p>" + res[i].company_code + "</p>";
+    //         htmlStr += "</div>";
+    //       }
+    //       // uncomment the line below to see what our string looks like
+    //       console.log(htmlStr);
+    //       // insert our string into our document using jQuery
+    //       $('#edit').html(htmlStr); 
+    //     }, 'json');
+    // });
+  </script> 
+  <h1>Purchase Orders</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Purchase Order#</th>
+        <th>Company Code#</th>
+        <th>Supplier ID</th>
+        <th>Supplier Desc</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for po_header in result %}
+        <tr>
+          <td><a href="/POS/{{po_header.po_header_id}}">{{po_header.po_header_id}}</a></td>
+          <td>{{po_header.company_code}}</td>
+          <td>{{po_header.supplier_id}}</td>
+          <td>{{po_header.supplier_desc}}</td> 
+          <td><a href="/POS/{{po_header.po_header_id}}/edit">Edit</a><form action="/POS/{{po_header.po_header_id}}/delete" method="post"><input type="submit" value="Delete"></form></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <a href="/POS/new"><button>New</button></a>
+</body>
+</html>

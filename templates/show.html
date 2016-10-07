@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{po_header.po_header_id}}'s Show Page</title>
+</head>
+<body>
+  <h1>Purcahse Order: {{po_header.po_header_id}}</h1>
+  <h2>Supplier Code: {{po_header.supplier_id}}</h2>
+  <h2>Supplier Desc: {{po_header.supplier_desc}}</h2>
+  <h2>Payment Terms: {{po_header.payment_term}}</h2>
+	<table class="table table-stripped">
+	  <thead>
+	    <tr class="text_align">
+	      <th class="text_align">Sr No</th>
+	      <th>Product</th>
+	      <th>Quantity</th>
+	      <th>Purchase Price</th>
+	      <th>Total Price</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <tr>
+	      <td> <input type="integer" name="sr_no" id="sr_no" value="{{po_item.sr_no}}" maxlength="6" size="3" disabled></td>
+	      <td> <input type="text" name="prod_desc" id="prod_desc" value="{{po_item.prod_desc}}" maxlength="70" size="55" disabled></td>
+	      <td> <input type="number" name="qty" id="qty" value="{{po_item.qty}}" size="25" disabled></td>
+	      <td> <input type="number" name="price_purch" id="price_purch" value="{{po_item.price_purch}}" size="25" disabled></td>
+	      <td> <input type="number" name="price_total_item" id="price_total_item" value="{{po_item.price_total_item}}" size="25" disabled></td>
+	    </tr>
+	  </tbody>
+	</table>
+  <p>GR Text:</p>
+  <textarea rows="7" name="gr_text" style="width:100%" disabled> {{po_header.gr_text}} </textarea>
+  <a href="/POS">Home</a>
+</body>
+</html>

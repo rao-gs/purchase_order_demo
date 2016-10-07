@@ -1,0 +1,49 @@
+.col-md-1 {
+  background-color: red;
+}
+.col-md-8 {
+  background-color: blue;
+}
+
+.col-md-4, .col-md-3{
+  background-color: lightgrey
+ border: 1px solid #999;
+}
+
+.col-md-6, .col-xs-6, .col-sm-4{
+  background-color: #D8D8DC;
+}	
+
+.col-md-1 {
+  background-color: red;
+}
+
+
+#itemview { 
+	background-color: lightgreen;}
+
+textarea {
+	width:100%;
+	height: auto;
+}
+
+.tag1 {	font-size: 1.3em;
+
+}
+
+.body {
+  font-size: 1em; /* Defaults to 16px on most browsers */
+}
+
+@-moz-document url-prefix() {
+  fieldset { display: table-cell; }
+}
+
+#itemflow {
+    height: 200px;
+    overflow: scroll;
+}
+
+.text_align {
+	text-align: center-2;
+}

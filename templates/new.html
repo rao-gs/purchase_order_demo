@@ -1,0 +1,116 @@
+<html>
+<head>
+  <title>Purchase Order</title>
+</head>
+<body>
+  <script language="JavaScript">
+    function showInput() {
+        document.getElementById('display').innerHTML =
+                    document.getElementById("user_input").value;
+    }
+  </script>
+  <script>
+    // once the document is loaded
+    $(document).ready(function(){
+      // we'll add a click handler to the button
+      $('#edit').click(function(){
+          // this is the jQuery get function, which we'll use to send Ajax requests
+          // to this function we are passing 3 arguments
+          // a url, function, and the dataType parameter
+        $.get('/getPO/edit', function(res) {
+          // the function will send a request to the above url and get a response
+          // which we will store in the variable 'res'
+          var htmlStr = ""; // we create an empty string
+          // then loop through our res and create a string of html tags below
+          for(var i = 0; i < res.length; i++) {
+            htmlStr += "<div class='podetails'>";
+            htmlStr += "<h2>" + res[i].purchase_order_id + "</h2>";
+            htmlStr += "<h2>" + res[i].supplier_id + "</h2>";
+            htmlStr += "<p>" + res[i].company_code + "</p>";
+            htmlStr += "</div>";
+          }
+          // uncomment the line below to see what our string looks like
+          console.log(htmlStr);
+          // insert our string into our document using jQuery
+          $('#podetails').html(htmlStr);
+        }, 'json');
+      });
+
+      // $(document).ready(function(){
+      //   $('#edit').click(function(){
+      //     $.get('/get_PO/index_html', function(res) {
+      //       $('#podetails').html(res);
+      //     });
+      //   });
+      // });
+
+    //   $('#save').click(function(){
+    //       // this is the jQuery get function, which we'll use to send Ajax requests
+    //       // to this function we are passing 3 arguments
+    //       // a url, function, and the dataType parameter
+    //     $.get('/getPO/save', function(res) {
+
+    //       // the function will send a request to the above url and get a response
+    //       // which we will store in the variable 'res'
+    //       var htmlStr = ""; // we create an empty string
+    //       // then loop through our res and create a string of html tags below
+    //       for(var i = 0; i < res.length; i++) {
+    //         htmlStr += "<div class='quote'>";
+    //         htmlStr += "<h2>" + res[i].purchase_order_id + "</h2>";
+    //         htmlStr += "<h2>" + res[i].supplier_id + "</h2>";
+    //         htmlStr += "<p>" + res[i].company_code + "</p>";
+    //         htmlStr += "</div>";
+    //       }
+    //       // uncomment the line below to see what our string looks like
+    //       console.log(htmlStr);
+    //       // insert our string into our document using jQuery
+    //       $('#edit').html(htmlStr);
+    //     }, 'json');
+    // });
+  </script>
+  {{ all_pos }}
+  <h1>Create New Purchase Order!</h1>
+  <FORM action='/POS' method='POST'>
+      <input type="hidden" name="po_header_id" disabled></input></label>
+      // <label>Company code :</label>
+      // <input type="number" name="company_code" value= "">
+      <select name="company_code" class="selectpicker form-control">
+        {% for po_header in result %}
+          <option value="{{ po_header.company_code }}">{{ po_header.company_code }}</option>
+        {% endfor %}
+      </select>
+      <label>Supplier Code: </label><input type="text" name="supplier_id" value= "">
+      <label>supplier description: </label><input type="text" name="supplier_desc" value= " "></input>
+      <label>Payment terms: </label><input type="text" name="payment_term" value= " "></input>
+                <table class="table table-stripped">
+                  <thead>
+                    <tr class="text_align">
+                      <th class="text_align">Sr No</th>
+                      <th>Product</th>
+                      <th>Quantity</th>
+                      <th>Purchase Price</th>
+                      <th>Total Price</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> <input type="integer" name="sr_no" id="sr_no" value="1" maxlength="6" size="3"></td>
+                      <td> <input type="text" name="prod_desc" id="prod_desc" value=" " maxlength="70" size="55" required></td>
+                      <td> <input type="number" name="qty" id="qty" value=" " size="25"></td>
+                      <td> <input type="number" name="price_purch" id="price_purch" value=" " size="25"></td>
+                      <td> <input type="number" name="price_total_item" id="price_total_item" value=" " size="25" disabled></td>
+                    </tr>
+                  </tbody>
+                </table>
+      <p> <h1 class="tag1" name="gr_text" id="gr_text">GR Text</h1></p>
+      <textarea rows="7" name="gr_text" style="width:100%"></textarea>
+      <input type="hidden" name="po_header_id" placeholder="po_header_id" value= " "></p>
+
+
+      <input type="submit" name="submit">
+  </form>
+<!--     <div id="podetails">
+    </div>
+     -->
+</body>
+</html>
